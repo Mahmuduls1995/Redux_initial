@@ -1,29 +1,28 @@
 const { createStore } = require("redux");
 
-// defining constants
 const INCREMENT = "INCREMENT";
 const DECREMENT = "DECREMENT";
+const RESET = "RESET";
 
-// state
 const initialCounterState = {
     count: 0,
 };
 
-// action - Object- 2 important part > type, payload
 const incrementCounter = () => {
     return {
         type: INCREMENT,
     };
 };
-
 const decrementCounter = () => {
     return {
         type: DECREMENT,
     };
 };
-
-
-// create reducer for counter this is Pure Function This input get and return Output
+const resetCounter = () => {
+    return {
+        type: RESET,
+    };
+};
 
 const counterReducer = (state = initialCounterState, action) => {
     switch (action.type) {
@@ -37,27 +36,25 @@ const counterReducer = (state = initialCounterState, action) => {
                 ...state,
                 count: state.count - 1,
             };
+        case RESET:
+            return {
+                ...state,
+                count: 0,
+            };
+
         default:
             state;
     }
 };
 
-
-// 1. state
-// 2. dispatch action
-// 3. reducer
-// 4. store - getState(), dispatch(), subscribe()
-
-// create store
 const store = createStore(counterReducer);
 
 store.subscribe(() => {
-  console.log(store.getState());
+    console.log(store.getState());
 });
 
-// dispatch action
-store.dispatch(incrementCounter());
 store.dispatch(incrementCounter());
 store.dispatch(incrementCounter());
 store.dispatch(decrementCounter());
+store.dispatch(resetCounter());
 
